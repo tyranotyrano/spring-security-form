@@ -6,5 +6,5 @@ import com.tyranotyrano.springsecurityform.domain.account.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-	Account findByUserName(String username);
+	Account findByUsername(String username);
 }
