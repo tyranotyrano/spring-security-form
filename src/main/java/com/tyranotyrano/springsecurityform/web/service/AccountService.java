@@ -1,4 +1,4 @@
-package com.tyranotyrano.springsecurityform.service;
+package com.tyranotyrano.springsecurityform.web.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

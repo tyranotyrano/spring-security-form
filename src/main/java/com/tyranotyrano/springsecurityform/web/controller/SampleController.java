@@ -1,4 +1,4 @@
-package com.tyranotyrano.springsecurityform.controller;
+package com.tyranotyrano.springsecurityform.web.controller;
 
 import java.security.Principal;
 
