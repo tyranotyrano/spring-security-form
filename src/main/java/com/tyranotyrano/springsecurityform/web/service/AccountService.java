@@ -21,7 +21,7 @@ public class AccountService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account account = accountRepository.findByUserName(username);
+		Account account = accountRepository.findByUsername(username);
 		if (account == null) {
 			throw new UsernameNotFoundException(username);
 		}
@@ -31,5 +31,10 @@ public class AccountService implements UserDetailsService {
 				   .password(account.getPassword())
 				   .roles(account.getRole())
 				   .build();
+	}
+
+	public Account create(Account account) {
+		account.encodePassword();
+		return accountRepository.save(account);
 	}
 }

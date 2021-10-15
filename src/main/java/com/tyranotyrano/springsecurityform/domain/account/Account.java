@@ -7,12 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
+import lombok.Data;
 
 @Entity
 @Table(name = "account")
-@Getter
+@Data
 public class Account {
+	private static String NOOP_PASSWORD_ENCODING = "{noop}";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +25,8 @@ public class Account {
 	private String password;
 
 	private String role;
+
+	public void encodePassword() {
+		this.password = NOOP_PASSWORD_ENCODING + this.password;
+	}
 }
