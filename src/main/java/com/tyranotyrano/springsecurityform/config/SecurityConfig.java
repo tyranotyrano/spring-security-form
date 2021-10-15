@@ -19,13 +19,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin();
 		http.httpBasic();
 	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("tyrano").password("{noop}1234").roles("USER")
-			.and()
-			.withUser("admin").password("{noop}1234").roles("ADMIN");
-
-	}
 }
