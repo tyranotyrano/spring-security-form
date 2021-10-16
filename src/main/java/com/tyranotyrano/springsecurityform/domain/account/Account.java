@@ -7,13 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "account")
 @Data
 public class Account {
-	private static String NOOP_PASSWORD_ENCODING = "{noop}";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public class Account {
 
 	private String role;
 
-	public void encodePassword() {
-		this.password = NOOP_PASSWORD_ENCODING + this.password;
+	public void encodePassword(PasswordEncoder passwordEncoder) {
+		this.password = passwordEncoder.encode(this.password);
 	}
 }
