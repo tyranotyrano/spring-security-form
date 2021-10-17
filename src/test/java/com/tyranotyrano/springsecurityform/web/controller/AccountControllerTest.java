@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,20 +28,23 @@ class AccountControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
+	@WithAnonymousUser
 	void index_by_anonymous() throws Exception {
-		mockMvc.perform(get("/").with(anonymous()))
+		mockMvc.perform(get("/"))
 			   .andDo(print())
 			   .andExpect(status().isOk());
 	}
 
 	@Test
+	@WithMockUser(username = "tyrano", roles = "USER")
 	void index_by_user() throws Exception {
-		mockMvc.perform(get("/").with(user("tyrano").roles("USER")))
+		mockMvc.perform(get("/"))
 			   .andDo(print())
 			   .andExpect(status().isOk());
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "ADMIN")
 	void index_by_admin() throws Exception {
 		mockMvc.perform(get("/").with(user("admin").roles("ADMIN")))
 			   .andDo(print())
@@ -47,6 +52,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@WithMockUser(username = "tyrano", roles = "USER")
 	void admin_by_user() throws Exception {
 		mockMvc.perform(get("/admin").with(user("tyrano").roles("USER")))
 			   .andDo(print())
@@ -54,6 +60,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "ADMIN")
 	void admin_by_admin() throws Exception {
 		mockMvc.perform(get("/admin").with(user("admin").roles("ADMIN")))
 			   .andDo(print())
