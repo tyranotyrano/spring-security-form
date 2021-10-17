@@ -56,6 +56,38 @@ class AccountControllerTest {
 
 	@Test
 	@WithUserAccount
+	void info_by_user() throws Exception {
+		mockMvc.perform(get("/info"))
+			   .andDo(print())
+			   .andExpect(status().isOk());
+	}
+
+	@Test
+	@WithAdminAccount
+	void info_by_admin() throws Exception {
+		mockMvc.perform(get("/info"))
+			   .andDo(print())
+			   .andExpect(status().isOk());
+	}
+
+	@Test
+	@WithUserAccount
+	void dashboard_by_user() throws Exception {
+		mockMvc.perform(get("/dashboard"))
+			   .andDo(print())
+			   .andExpect(status().isOk());
+	}
+
+	@Test
+	@WithAdminAccount
+	void dashboard_by_admin() throws Exception {
+		mockMvc.perform(get("/dashboard"))
+			   .andDo(print())
+			   .andExpect(status().isOk());
+	}
+
+	@Test
+	@WithUserAccount
 	void admin_by_user() throws Exception {
 		mockMvc.perform(get("/admin").with(user("tyrano").roles("USER")))
 			   .andDo(print())
