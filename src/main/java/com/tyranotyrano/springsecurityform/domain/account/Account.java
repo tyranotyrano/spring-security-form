@@ -9,10 +9,17 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "account")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Data
 public class Account {
 
@@ -26,6 +33,14 @@ public class Account {
 	private String password;
 
 	private String role;
+
+	public static Account create(String username, String password, String role) {
+		return Account.builder()
+					  .username(username)
+					  .password(password)
+					  .role(role)
+					  .build();
+	}
 
 	public void encodePassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.password);
