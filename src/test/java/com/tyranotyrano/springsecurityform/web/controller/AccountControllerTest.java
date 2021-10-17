@@ -18,6 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tyranotyrano.springsecurityform.web.controller.annotation.WithAdminAccount;
+import com.tyranotyrano.springsecurityform.web.controller.annotation.WithUserAccount;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,7 +39,7 @@ class AccountControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "tyrano", roles = "USER")
+	@WithUserAccount
 	void index_by_user() throws Exception {
 		mockMvc.perform(get("/"))
 			   .andDo(print())
@@ -44,7 +47,7 @@ class AccountControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "admin", roles = "ADMIN")
+	@WithAdminAccount
 	void index_by_admin() throws Exception {
 		mockMvc.perform(get("/").with(user("admin").roles("ADMIN")))
 			   .andDo(print())
@@ -52,7 +55,7 @@ class AccountControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "tyrano", roles = "USER")
+	@WithUserAccount
 	void admin_by_user() throws Exception {
 		mockMvc.perform(get("/admin").with(user("tyrano").roles("USER")))
 			   .andDo(print())
@@ -60,7 +63,7 @@ class AccountControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "admin", roles = "ADMIN")
+	@WithAdminAccount
 	void admin_by_admin() throws Exception {
 		mockMvc.perform(get("/admin").with(user("admin").roles("ADMIN")))
 			   .andDo(print())
