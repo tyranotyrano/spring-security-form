@@ -6,8 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
+
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class ViewController {
+
+	private final SecurityContextService securityContextService;
 
 	@GetMapping("/")
 	public String index(Model model, Principal principal) {
@@ -35,6 +42,7 @@ public class ViewController {
 	public String dashboard(Model model, Principal principal) {
 		// Dashboard : 로그인한 사용자만 접근가능 -> Principal 필요
 		model.addAttribute("message", "dashboard : " + principal.getName());
+		securityContextService.confirmAuthentication();
 		return "dashboard";
 	}
 
