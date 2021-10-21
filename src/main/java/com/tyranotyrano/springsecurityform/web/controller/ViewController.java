@@ -50,4 +50,11 @@ public class ViewController {
 		model.addAttribute("message", "admin : " + principal.getName());
 		return "admin";
 	}
+
+	@GetMapping("/user")
+	public String user(Model model, Principal principal) {
+		// user : 일반 사용자 or 관리자만 접근 가능 -> Principal 필요
+		model.addAttribute("message", "user : " + principal.getName());
+		return "user";
+	}
 }
