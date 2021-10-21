@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,9 +34,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.mvcMatchers("/user").hasRole("USER")
 			.anyRequest().authenticated()
-			.accessDecisionManager(accessDecisionManager());
+			.expressionHandler(expressionHandler());
 		http.formLogin();
 		http.httpBasic();
+	}
+
+	/**
+	 * 사용자의 권한 상하관계 Hierarchy 를 설정한 SecurityExpressionHandler 를 만든다.
+	 *   - 권한 상하관계 : ADMIN > USER > ANONYMOUS
+	 * */
+	private SecurityExpressionHandler expressionHandler() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER");
+
+		DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+		handler.setRoleHierarchy(roleHierarchy);
+
+		return handler;
 	}
 
 	/**
