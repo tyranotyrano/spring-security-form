@@ -1,12 +1,17 @@
 package com.tyranotyrano.springsecurityform.web.controller;
 
+import com.tyranotyrano.springsecurityform.common.util.SecurityLogger;
 import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,5 +61,15 @@ public class ViewController {
 		// user : 일반 사용자 or 관리자만 접근 가능 -> Principal 필요
 		model.addAttribute("message", "user : " + principal.getName());
 		return "user";
+	}
+
+	@GetMapping("/async-handler")
+	@ResponseBody
+	public Callable<String> asyncHandler() {
+		SecurityLogger.log("MVC");
+		return () -> {
+			SecurityLogger.log("Callable");
+			return "async handler";
+		};
 	}
 }
