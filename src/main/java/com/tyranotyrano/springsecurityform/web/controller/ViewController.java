@@ -1,6 +1,7 @@
 package com.tyranotyrano.springsecurityform.web.controller;
 
 import com.tyranotyrano.springsecurityform.common.util.SecurityLogger;
+import com.tyranotyrano.springsecurityform.web.service.SecurityAsyncService;
 import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.Callable;
 public class ViewController {
 
 	private final SecurityContextService securityContextService;
+	private final SecurityAsyncService securityAsyncService;
 
 	@GetMapping("/")
 	public String index(Model model, Principal principal) {
@@ -71,5 +73,14 @@ public class ViewController {
 			SecurityLogger.log("Callable");
 			return "async handler";
 		};
+	}
+
+	@GetMapping("/async-service")
+	@ResponseBody
+	public String asyncService() {
+		SecurityLogger.log("MVC, before async service");
+		securityAsyncService.asyncService();
+		SecurityLogger.log("MVC, after async service");
+		return "Async Service";
 	}
 }
