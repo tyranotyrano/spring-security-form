@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.expressionHandler(expressionHandler());
 		http.formLogin();
 		http.httpBasic();
+		http.csrf().disable();
 
 		// SecurityContextHolder Strategy 설정
 		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
