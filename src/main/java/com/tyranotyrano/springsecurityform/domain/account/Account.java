@@ -34,6 +34,10 @@ public class Account {
 
 	private String role;
 
+	public static Account createEmpty() {
+		return new Account();
+	}
+
 	public static Account create(String username, String password, String role) {
 		return Account.builder()
 					  .username(username)

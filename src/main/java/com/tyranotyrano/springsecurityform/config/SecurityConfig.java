@@ -38,14 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.mvcMatchers("/", "/info", "/account/tmp/**").permitAll()
+			.mvcMatchers("/", "/info", "/account/tmp/**", "/signup").permitAll()
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.mvcMatchers("/user").hasRole("USER")
 			.anyRequest().authenticated()
 			.expressionHandler(expressionHandler());
 		http.formLogin();
 		http.httpBasic();
-		http.csrf().disable();
+
+		// http.csrf().disable();
 
 		// SecurityContextHolder Strategy 설정
 		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
