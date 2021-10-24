@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.expressionHandler(expressionHandler());
 		http.formLogin();
 		http.httpBasic();
+		http.logout().logoutSuccessUrl("/");
 
 		// http.csrf().disable();
 
