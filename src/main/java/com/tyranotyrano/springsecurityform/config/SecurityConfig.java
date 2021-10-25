@@ -43,8 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.mvcMatchers("/user").hasRole("USER")
 			.anyRequest().authenticated()
 			.expressionHandler(expressionHandler());
-		http.formLogin();
+
+		http.formLogin()
+			.loginPage("/login").permitAll();
+
 		http.httpBasic();
+
 		http.logout().logoutSuccessUrl("/");
 
 		// http.csrf().disable();
