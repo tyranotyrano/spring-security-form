@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
@@ -52,7 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout().logoutSuccessUrl("/");
 
 		http.exceptionHandling()
-			.accessDeniedPage("/access-denied");
+			.accessDeniedHandler((request, response, accessDeniedException) -> {
+				UserDetails principal = (UserDetails)SecurityContextHolder.getContext()
+																		  .getAuthentication()
+																		  .getPrincipal();
+				String username = principal.getUsername();
+				System.out.println(username + " is denied to access " + request.getRequestURI());
+				response.sendRedirect("/access-denied");
+			});
 
 		// http.sessionManagement()
 		// 	.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
