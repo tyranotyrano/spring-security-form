@@ -51,6 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.logout().logoutSuccessUrl("/");
 
+		// http.sessionManagement()
+		// 	.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+		// 	.sessionFixation()
+		// 	.changeSessionId()
+		// 	.invalidSessionUrl("/login")
+		// 	.maximumSessions(1)
+		// 	.expiredUrl("/login")
+		// 	.maxSessionsPreventsLogin(false);
+
 		// http.csrf().disable();
 
 		// SecurityContextHolder Strategy 설정
