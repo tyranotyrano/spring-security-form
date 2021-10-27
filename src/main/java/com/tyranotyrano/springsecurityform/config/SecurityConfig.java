@@ -3,6 +3,7 @@ package com.tyranotyrano.springsecurityform.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +23,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 
+import com.tyranotyrano.springsecurityform.web.service.AccountService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private AccountService accountService;
 
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
@@ -52,6 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic();
 
 		http.logout().logoutSuccessUrl("/");
+
+		http.rememberMe()
+			.userDetailsService(accountService)
+			.key("remember-me-sample");
 
 		http.exceptionHandling()
 			.accessDeniedHandler((request, response, accessDeniedException) -> {
