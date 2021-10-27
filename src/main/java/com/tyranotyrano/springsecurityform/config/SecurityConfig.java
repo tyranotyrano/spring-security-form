@@ -22,7 +22,9 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
+import com.tyranotyrano.springsecurityform.web.filter.LoggingFilter;
 import com.tyranotyrano.springsecurityform.web.service.AccountService;
 
 @Configuration
@@ -44,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.addFilterBefore(new LoggingFilter(), WebAsyncManagerIntegrationFilter.class);
+
 		http.authorizeRequests()
 			.mvcMatchers("/", "/info", "/account/tmp/**", "/signup").permitAll()
 			.mvcMatchers("/admin").hasRole("ADMIN")
