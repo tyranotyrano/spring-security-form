@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tyranotyrano.springsecurityform.domain.account.Account;
+import com.tyranotyrano.springsecurityform.domain.account.UserAccount;
 import com.tyranotyrano.springsecurityform.domain.repository.AccountRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,11 +29,7 @@ public class AccountService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 
-		return User.builder()
-				   .username(account.getUsername())
-				   .password(account.getPassword())
-				   .roles(account.getRole())
-				   .build();
+		return UserAccount.create(account);
 	}
 
 	public Account create(Account account) {
