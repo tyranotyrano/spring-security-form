@@ -1,20 +1,20 @@
 package com.tyranotyrano.springsecurityform.web.controller;
 
-import com.tyranotyrano.springsecurityform.common.util.SecurityLogger;
-import com.tyranotyrano.springsecurityform.domain.account.UserAccount;
-import com.tyranotyrano.springsecurityform.web.service.SecurityAsyncService;
-import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
-import lombok.RequiredArgsConstructor;
+import java.security.Principal;
+import java.util.concurrent.Callable;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.security.Principal;
-import java.util.concurrent.Callable;
+import com.tyranotyrano.springsecurityform.common.util.SecurityLogger;
+import com.tyranotyrano.springsecurityform.domain.account.Account;
+import com.tyranotyrano.springsecurityform.web.annotaion.CurrentUser;
+import com.tyranotyrano.springsecurityform.web.service.SecurityAsyncService;
+import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,14 +24,14 @@ public class ViewController {
 	private final SecurityAsyncService securityAsyncService;
 
 	@GetMapping("/")
-	public String index(Model model, @AuthenticationPrincipal UserAccount userAccount) {
-		if (userAccount == null) {
+	public String index(Model model, @CurrentUser Account account) {
+		if (account == null) {
 			// 로그인 안한 사람
 			model.addAttribute("message", "index : Hello Spring Security!!!");
 		}
 		else {
 			// 로그인 한 사람
-			model.addAttribute("message", "index : " + userAccount.getUsername());
+			model.addAttribute("message", "index : " + account.getUsername());
 		}
 
 		return "index";
