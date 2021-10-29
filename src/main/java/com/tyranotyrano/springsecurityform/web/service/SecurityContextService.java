@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class SecurityContextService {
 
 	@Secured("ROLE_USER")
+	// @Secured({"ROLE_USER", "ROLE_ADMIN"})
 	// @RolesAllowed("ROLE_USER")
 	// @PreAuthorize("hasRole('USER')")
 	// @PostAuthorize("isAuthenticated() and ((returnObject.name == principal.username) or hasRole('ROLE_USER'))")

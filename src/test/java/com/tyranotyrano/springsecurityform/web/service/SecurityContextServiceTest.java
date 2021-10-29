@@ -13,6 +13,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tyranotyrano.springsecurityform.domain.account.Account;
+import com.tyranotyrano.springsecurityform.web.controller.annotation.WithAdminAccount;
+import com.tyranotyrano.springsecurityform.web.controller.annotation.WithUserAccount;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -39,6 +41,18 @@ class SecurityContextServiceTest {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
+		securityContextService.confirmAuthentication();
+	}
+
+	@Test
+	@WithUserAccount
+	void confirmAuthenticationTest_By_Mock_User() {
+		securityContextService.confirmAuthentication();
+	}
+
+	@Test
+	@WithAdminAccount
+	void confirmAuthenticationTest_By_Mock_Admin() {
 		securityContextService.confirmAuthentication();
 	}
 }
