@@ -1,3 +1,4 @@
+# Property 로 User 생성
 #spring:
 #  security:
 #    user:
@@ -5,6 +6,7 @@
 #      password: 1234
 #      roles: ADMIN
 
+# DB 연결정보 및 JPA 설정 추가
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/techstudy
@@ -14,4 +16,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+# JPA SQL 중 "?" 에 들어간 파라미터값 로그 출력
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
