@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tyranotyrano.springsecurityform.common.util.SecurityLogger;
 import com.tyranotyrano.springsecurityform.domain.account.Account;
 import com.tyranotyrano.springsecurityform.web.annotaion.CurrentUser;
+import com.tyranotyrano.springsecurityform.web.service.AccountService;
 import com.tyranotyrano.springsecurityform.web.service.SecurityAsyncService;
 import com.tyranotyrano.springsecurityform.web.service.SecurityContextService;
 
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ViewController {
 
+	private final AccountService accountService;
 	private final SecurityContextService securityContextService;
 	private final SecurityAsyncService securityAsyncService;
 
@@ -56,6 +58,7 @@ public class ViewController {
 	public String admin(Model model, Principal principal) {
 		// admin : 관리자만 접근 가능 -> Principal 필요
 		model.addAttribute("message", "admin : " + principal.getName());
+		model.addAttribute("account", accountService.readCurrentUser());
 		return "admin";
 	}
 

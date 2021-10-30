@@ -36,4 +36,8 @@ public class AccountService implements UserDetailsService {
 		account.encodePassword(passwordEncoder);
 		return accountRepository.save(account);
 	}
+
+	public Account readCurrentUser() {
+		return accountRepository.findCurrentUser();
+	}
 }
