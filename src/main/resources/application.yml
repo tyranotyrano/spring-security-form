@@ -7,6 +7,7 @@
 #      roles: ADMIN
 
 # DB 연결정보 및 JPA 설정 추가
+# - 앞으로는 H2 콘솔을 실행하여 H2 DB Server 를 실행시킨 후 App 을 실행해야 한다.
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/techstudy
@@ -21,7 +22,7 @@ spring:
         show_sql: true
         format_sql: true
 
-# JPA SQL 중 "?" 에 들어간 파라미터값 로그 출력
+# 콘솔에 출력되는 JPA SQL 중 "?" 에 들어간 파라미터값 로그 출력
 logging:
   level:
     org:
